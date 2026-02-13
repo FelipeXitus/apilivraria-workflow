@@ -37,7 +37,6 @@ class Autor {
   }
 
   async atualizar(id) {
-    // o update retorna a quantidade de rows atualizados e não o objeto do registro atualizado
     await db('autores')
       .where({ id })
       .update({ ...this, updated_at: new Date().toISOString() });
@@ -46,22 +45,25 @@ class Autor {
   }
 
   static async excluir(id) {
-    // o del retorna a quantidade de rows deletados
     return db('autores')
       .where({ id })
       .del();
   }
 
   async salvar() {
-    // verificar se o id existe no banco
-    // se não existir é create
-    // se existir é update
     if (this.id) {
       const resultado = await this.atualizar(this.id);
       return resultado;
     }
     const resultado = await this.criar();
     return resultado;
+  }
+
+  static async pegarLivrosPorAutor(autorId) {
+    return db('livros')
+      .join('autores', 'livros.autor_id', 'autores.id')
+      .select('livros.*')
+      .where({ 'autores.id': autorId });
   }
 }
 

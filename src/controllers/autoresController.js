@@ -23,6 +23,23 @@ class AutoresController {
     }
   };
 
+  static listarLivrosPorAutor = async (req, res) => {
+    const { params } = req;
+    try {
+      const listaLivros = await Autor.pegarLivrosPorAutor(params.id);
+      const autor = await Autor.pegarPeloId(params.id);
+      if (!autor || autor.length === 0) {
+        return res.status(404).json({ message: `Autor id ${params.id} não encontrado` });
+      };
+      if (!listaLivros || listaLivros.length === 0) {
+        return res.status(404).json({ message: `Nenhum livro encontrado para o autor com id ${params.id}` });
+      };
+      return res.status(200).json({ autor, livros: listaLivros });
+    } catch (err) {
+      return res.status(500).json(err.message);
+    }
+  };
+
   static cadastrarAutor = async (req, res) => {
     const { body } = req;
     const autor = new Autor(body);

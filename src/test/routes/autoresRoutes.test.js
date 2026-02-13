@@ -40,6 +40,26 @@ describe('GET em /autores', () => {
       });
   });
 
+    it('Deve retornar os livros de um autor', (done) => {
+    const idAutor = 1;
+    chai.request(app)
+      .get(`/autores/${idAutor}/livros`)
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.livros).to.have.property('nome');
+        expect(res.body.livros).to.have.property('id');
+        expect(res.body.livros).to.have.property('titulo');
+        expect(res.body.livros).to.have.property('paginas');
+        expect(res.body.livros).to.have.property('editora_id');
+        expect(res.body.livros).to.have.property('autor_id');
+        expect(res.body.autor).to.have.property('id');
+        expect(res.body.autor).to.have.property('nome');
+        expect(res.body.autor).to.have.property('nacionalidade');
+        done();
+      });
+  });
+
   it('Não deve retornar um autor com id inválido', (done) => {
     const idAutor = 'A';
     chai.request(app)
