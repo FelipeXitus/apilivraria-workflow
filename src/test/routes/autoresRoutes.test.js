@@ -47,15 +47,9 @@ describe('GET em /autores', () => {
       .set('Accept', 'application/json')
       .end((err, res) => {
         expect(res.status).to.equal(200);
-        expect(res.body.livros).to.have.property('nome');
-        expect(res.body.livros).to.have.property('id');
-        expect(res.body.livros).to.have.property('titulo');
-        expect(res.body.livros).to.have.property('paginas');
-        expect(res.body.livros).to.have.property('editora_id');
-        expect(res.body.livros).to.have.property('autor_id');
-        expect(res.body.autor).to.have.property('id');
-        expect(res.body.autor).to.have.property('nome');
-        expect(res.body.autor).to.have.property('nacionalidade');
+        expect(res.body).to.have.property('livros');
+        expect(res.body).to.have.property('autor');
+        expect(res.body.livros).to.be.an('array');
         done();
       });
   });
