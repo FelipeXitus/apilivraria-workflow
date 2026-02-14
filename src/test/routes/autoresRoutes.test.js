@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-expressions */
 import { after } from 'mocha';
 import chai from 'chai';
@@ -40,7 +41,7 @@ describe('GET em /autores', () => {
       });
   });
 
-    it('Deve retornar os livros de um autor', (done) => {
+  it('Deve retornar os livros de um autor', (done) => {
     const idAutor = 1;
     chai.request(app)
       .get(`/autores/${idAutor}/livros`)

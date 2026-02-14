@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import Autor from '../models/autor.js';
 
 class AutoresController {
@@ -30,10 +31,10 @@ class AutoresController {
       const autor = await Autor.pegarPeloId(params.id);
       if (!autor || autor.length === 0) {
         return res.status(404).json({ message: `Autor id ${params.id} não encontrado` });
-      };
+      }
       if (!listaLivros || listaLivros.length === 0) {
         return res.status(404).json({ message: `Nenhum livro encontrado para o autor com id ${params.id}` });
-      };
+      }
       return res.status(200).json({ autor, livros: listaLivros });
     } catch (err) {
       return res.status(500).json(err.message);
