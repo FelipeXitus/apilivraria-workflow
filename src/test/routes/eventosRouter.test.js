@@ -15,6 +15,7 @@ after(async () => {
 
 describe('GET em /eventos', () => {
   it('Deve retornar uma lista de eventos', (done) => {
+    process.env.EVENTO_FLAG = 'true';
     chai.request(app)
       .get('/eventos')
       .set('Accept', 'application/json')
@@ -24,6 +25,19 @@ describe('GET em /eventos', () => {
         expect(res.body[0]).to.have.property('id');
         expect(res.body[0]).to.have.property('nome');
         expect(res.body[0]).to.have.property('data');
+        done();
+      });
+  });
+
+  it('Deve retornar 403 se o acesso a eventos não for permitido', (done) => {
+    process.env.EVENTO_FLAG = 'false';
+    chai.request(app)
+      .get('/eventos')
+      .set('Accept', 'application/json')
+      .end((err, res) => {
+        expect(res.status).to.equal(403);
+        expect(res.body).to.have.property('message')
+          .eql('Acesso a eventos não permitido');
         done();
       });
   });
